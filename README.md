@@ -65,15 +65,18 @@ Deployed on a Synology NAS (Docker), this project operates **11 independent auto
 
 ### 2. Clone the Repository
 ```bash
-git clone [https://github.com/YOUR_GITHUB_USERNAME/rehab_multibots.git](https://github.com/YOUR_GITHUB_USERNAME/rehab_multibots.git)
+git clone [https://github.com/mingil/rehab_multibots.git](https://github.com/mingil/rehab_multibots.git)
 cd rehab_multibots
-3. Environment Variables
+```
+
+### 3. Environment Variables
 Create a .env file based on the provided template. Never commit .env to Git.
 
 Bash
 cp .env.example .env
 nano .env # Fill in your API keys
-4. Deploy via Docker Compose
+
+### 4. Deploy via Docker Compose
 Build the image and deploy all 11 bots in the background:
 
 Bash
