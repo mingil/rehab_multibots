@@ -111,7 +111,7 @@ docker logs -f multibot_02_neuro
 ```
 
 ### 📂 Project Structure
-Plaintext
+```Plaintext
 📦 rehab_multibots
  ┣ 📜 compose.yaml         # Docker Compose configs & bot templates
  ┣ 📜 Dockerfile           # Python 3.11 slim image setup
@@ -123,6 +123,7 @@ Plaintext
  ┣ 📜 zotero_client.py     # Zotero API integration
  ┣ 📜 gemini_client.py     # AI prompt engineering & analysis
  ┗ 📜 notifier.py          # Telegram & Email notification logic
+```
 
 ### 📜 License & Disclaimer
 This project is for personal, academic, and non-commercial use. Please adhere to the API usage policies of Google Gemini, OpenAlex, and Zotero.
