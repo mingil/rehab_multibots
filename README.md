@@ -128,4 +128,4 @@ docker logs -f multibot_02_neuro
 ### 📜 License & Disclaimer
 This project is for personal, academic, and non-commercial use. Please adhere to the API usage policies of Google Gemini, OpenAlex, and Zotero.
 
-Disclaimer: AI-generated summaries and research insights should be critically reviewed by medical professionals. This tool is designed to assist in research planning and does not replace clinical judgment.
+### Disclaimer: AI-generated summaries and research insights should be critically reviewed by medical professionals. This tool is designed to assist in research planning and does not replace clinical judgment.
