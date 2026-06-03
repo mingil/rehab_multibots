@@ -78,3 +78,53 @@ To optimize server load and API rate limits, each bot wakes up automatically at 
 ```bash
 git clone [https://github.com/mingil/rehab_multibots.git](https://github.com/mingil/rehab_multibots.git)
 cd rehab_multibots
+```
+
+### 3. Environment Variables (.env)
+Create a .env file based on the template. (Never commit .env to Git!)
+
+```bash
+cp .env.example .env
+nano .env  # Fill in your secure credentials
+```
+
+### 4. Deploy via Docker Compose
+Build the image and deploy all 11 bots in the background:
+
+```bash
+docker compose up -d --build
+```
+
+### 🛠️ Maintenance & Hot-Reload
+This project utilizes Docker volume mounts (/volume1/docker/rehab_multibots:/app), meaning you can update the Python logic without rebuilding the entire Docker image.
+
+Update Code & Apply:
+
+```bash
+git pull origin main
+docker compose restart
+Check Bot Logs (e.g., Neuro Bot):
+```
+
+```bash
+docker logs -f multibot_02_neuro
+```
+
+### 📂 Project Structure
+Plaintext
+📦 rehab_multibots
+ ┣ 📜 compose.yaml         # Docker Compose configs & bot templates
+ ┣ 📜 Dockerfile           # Python 3.11 slim image setup
+ ┣ 📜 requirements.txt     # Python dependencies
+ ┣ 📜 main.py              # Main execution logic & scheduling
+ ┣ 📜 config.py            # Global configuration & Env loaders
+ ┣ 📜 db_manager.py        # SQLite caching operations
+ ┣ 📜 openalex_client.py   # OpenAlex API integration
+ ┣ 📜 zotero_client.py     # Zotero API integration
+ ┣ 📜 gemini_client.py     # AI prompt engineering & analysis
+ ┗ 📜 notifier.py          # Telegram & Email notification logic
+
+### 📜 License & Disclaimer
+This project is for personal, academic, and non-commercial use. Please adhere to the API usage policies of Google Gemini, OpenAlex, and Zotero.
+
+Disclaimer: AI-generated summaries and research insights should be critically reviewed by medical professionals. This tool is designed to assist in research planning and does not replace clinical judgment.
