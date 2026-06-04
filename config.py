@@ -17,7 +17,7 @@ GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
 # 도커 컴포즈가 11개의 봇마다 다르게 주입해 주는 분과별 고유 이름표들
 BOT_NAME = os.getenv("BOT_NAME", "general")
 BOT_KOR_NAME = os.getenv("BOT_KOR_NAME", "일반 재활")
-RUN_DAY = int(os.getenv("RUN_DAY", "1"))
+RUN_MONTH = int(os.getenv("RUN_MONTH", "1"))
 ZOTERO_FOLDER_ID = os.getenv("ZOTERO_FOLDER_ID")
 TARGET_ISSNS = os.getenv("TARGET_ISSNS", "")
 

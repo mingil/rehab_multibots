@@ -10,123 +10,123 @@ x-bot-template: &bot-template
     - /volume1/docker/rehab_multibots:/app
 
 services:
-  # 🤖 1. 일반/포괄 재활 (매월 1일 가동)
+  # 🤖 1. 일반/포괄 재활 (매년 1월 가동)
   bot_01_general:
     <<: *bot-template
     container_name: multibot_01_general
     environment:
       - BOT_NAME=general
       - BOT_KOR_NAME=일반 및 포괄 재활
-      - RUN_DAY=1
+      - RUN_MONTH=1
       - ZOTERO_FOLDER_ID=NP96UXQT
       - TARGET_ISSNS=0003-9993|2234-0645|0894-9115|0269-2155|1934-1482|1650-1977|1973-9087|0963-8288
 
-  # 🤖 2. 뇌신경재활 (매월 2일 가동)
+  # 🤖 2. 뇌신경재활 (매년 2월 가동)
   bot_02_neuro:
     <<: *bot-template
     container_name: multibot_02_neuro
     environment:
       - BOT_NAME=neuro
       - BOT_KOR_NAME=뇌신경 및 뇌졸중 재활
-      - RUN_DAY=2
+      - RUN_MONTH=2
       - ZOTERO_FOLDER_ID=A6HACQEL
       - TARGET_ISSNS=0039-2499|1545-9683|1074-9357|1743-0003
 
-  # 🤖 3. 척수손상 (매월 3일 가동)
+  # 🤖 3. 척수손상 (매년 3월 가동)
   bot_03_sci:
     <<: *bot-template
     container_name: multibot_03_sci
     environment:
       - BOT_NAME=sci
       - BOT_KOR_NAME=척수손상 재활
-      - RUN_DAY=3
+      - RUN_MONTH=3
       - ZOTERO_FOLDER_ID=UX45UG5I
       - TARGET_ISSNS=1362-4393|1079-0268|2058-6124
 
-  # 🤖 4. 소아재활 (매월 4일 가동)
+  # 🤖 4. 소아재활 (매년 4월 가동)
   bot_04_peds:
     <<: *bot-template
     container_name: multibot_04_peds
     environment:
       - BOT_NAME=peds
       - BOT_KOR_NAME=소아재활
-      - RUN_DAY=4
+      - RUN_MONTH=4
       - ZOTERO_FOLDER_ID=TTDCGMN2
       - TARGET_ISSNS=0012-1622|0898-5669|0194-2638
 
-  # 🤖 5. 심폐재활 (매월 5일 가동)
+  # 🤖 5. 심폐재활 (매년 5월 가동)
   bot_05_cardio:
     <<: *bot-template
     container_name: multibot_05_cardio
     environment:
       - BOT_NAME=cardio
       - BOT_KOR_NAME=심폐재활
-      - RUN_DAY=5
+      - RUN_MONTH=5
       - ZOTERO_FOLDER_ID=I7H8G98B
       - TARGET_ISSNS=1932-750X|0147-9563|2047-4873
 
-  # 🤖 6. 연하장애 (매월 6일 가동)
+  # 🤖 6. 연하장애 (매년 6월 가동)
   bot_06_dysphagia:
     <<: *bot-template
     container_name: multibot_06_dysphagia
     environment:
       - BOT_NAME=dysphagia
       - BOT_KOR_NAME=연하장애
-      - RUN_DAY=6
+      - RUN_MONTH=6
       - ZOTERO_FOLDER_ID=4EJ6YKPI
       - TARGET_ISSNS=0179-051X|1092-4388|1058-0360
 
-  # 🤖 7. 근전도 및 전기진단 (매월 7일 가동)
+  # 🤖 7. 근전도 및 전기진단 (매년 7월 가동)
   bot_07_emg:
     <<: *bot-template
     container_name: multibot_07_emg
     environment:
       - BOT_NAME=emg
       - BOT_KOR_NAME=근전도 및 전기진단
-      - RUN_DAY=7
+      - RUN_MONTH=7
       - ZOTERO_FOLDER_ID=SKV3RN7G
       - TARGET_ISSNS=0148-639X|1388-2457|1050-6411
 
-  # 🤖 8. 근골격초음파 (매월 8일 가동)
+  # 🤖 8. 근골격초음파 (매년 8월 가동)
   bot_08_msk:
     <<: *bot-template
     container_name: multibot_08_msk
     environment:
       - BOT_NAME=msk
       - BOT_KOR_NAME=근골격 및 초음파
-      - RUN_DAY=8
+      - RUN_MONTH=8
       - ZOTERO_FOLDER_ID=QX28AV9Z
       - TARGET_ISSNS=0301-5629|0278-4297|0364-2348
 
-  # 🤖 9. 통증재활 (매월 9일 가동)
+  # 🤖 9. 통증재활 (매년 9월 가동)
   bot_09_pain:
     <<: *bot-template
     container_name: multibot_09_pain
     environment:
       - BOT_NAME=pain
       - BOT_KOR_NAME=통증재활
-      - RUN_DAY=9
+      - RUN_MONTH=9
       - ZOTERO_FOLDER_ID=XSC4ZQAX
       - TARGET_ISSNS=0304-3959|0749-8047|1526-2375|1098-7339
 
-  # 🤖 10. 스포츠재활 (매월 10일 가동)
+  # 🤖 10. 스포츠재활 (매년 10월 가동)
   bot_10_sports:
     <<: *bot-template
     container_name: multibot_10_sports
     environment:
       - BOT_NAME=sports
       - BOT_KOR_NAME=스포츠재활
-      - RUN_DAY=10
+      - RUN_MONTH=10
       - ZOTERO_FOLDER_ID=J52JPFK2
       - TARGET_ISSNS=0363-5465|0306-3674|0112-1642
 
-  # 🤖 11. 의지보조기 (매월 11일 가동)
+  # 🤖 11. 의지보조기 (매년 11월 가동)
   bot_11_prosthetics:
     <<: *bot-template
     container_name: multibot_11_prosthetics
     environment:
       - BOT_NAME=prosthetics
       - BOT_KOR_NAME=의지보조기 및 생체역학
-      - RUN_DAY=11
+      - RUN_MONTH=11
       - ZOTERO_FOLDER_ID=CKRLZRZ8
       - TARGET_ISSNS=0309-3646|1040-8800
