@@ -10,6 +10,10 @@
 [![Zotero](https://img.shields.io/badge/Reference-Zotero_API-CC2936.svg?style=flat-square&logo=zotero&logoColor=white)](https://www.zotero.org/)
 [![SQLite3](https://img.shields.io/badge/SQLite-3-003B57.svg?style=flat-square&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 
+<br>
+
+**[ 📖 View Update History (Changelog) ](./CHANGELOG.md)**
+
 </div>
 
 <br>
@@ -33,23 +37,24 @@
 
 <br>
 
-## 🗓️ Sub-Specialty Schedule
+## 🗓️ Sub-Specialty Schedule (Annual Rotation)
 
-To optimize server load and API rate limits, each bot wakes up automatically at **09:00 AM** on its designated day of the month.
+To optimize server load and minimize information fatigue, each bot operates on a **monthly rotation system**. They wake up automatically at **06:30 AM** during their designated month. *(Includes a Fail-Safe catch-up mechanism if the NAS is offline).*
 
-| Day | Bot Container Name | PM&R Sub-Specialty |
+| Run Month | Bot Container Name | PM&R Sub-Specialty |
 | :---: | :--- | :--- |
-| **1st** | `bot_01_general` | General & Comprehensive Rehab |
-| **2nd** | `bot_02_neuro` | Neurorehabilitation & Stroke |
-| **3rd** | `bot_03_sci` | Spinal Cord Injury |
-| **4th** | `bot_04_peds` | Pediatric Rehabilitation |
-| **5th** | `bot_05_cardio` | Cardiopulmonary Rehabilitation |
-| **6th** | `bot_06_dysphagia`| Dysphagia (Swallowing Disorders) |
-| **7th** | `bot_07_emg` | EMG & Electrodiagnosis |
-| **8th** | `bot_08_msk` | Musculoskeletal & Ultrasound |
-| **9th** | `bot_09_pain` | Pain Medicine |
-| **10th** | `bot_10_sports` | Sports Rehabilitation |
-| **11th** | `bot_11_prosthetics`| Prosthetics, Orthotics & Biomechanics |
+| **January** | `bot_01_general` | General & Comprehensive Rehab |
+| **February**| `bot_02_neuro` | Neurorehabilitation & Stroke |
+| **March** | `bot_03_sci` | Spinal Cord Injury |
+| **April** | `bot_04_peds` | Pediatric Rehabilitation |
+| **May** | `bot_05_cardio` | Cardiopulmonary Rehabilitation |
+| **June** | `bot_06_dysphagia`| Dysphagia (Swallowing Disorders) |
+| **July** | `bot_07_emg` | EMG & Electrodiagnosis |
+| **August** | `bot_08_msk` | Musculoskeletal & Ultrasound |
+| **September**| `bot_09_pain` | Pain Medicine |
+| **October** | `bot_10_sports` | Sports Rehabilitation |
+| **November**| `bot_11_prosthetics`| Prosthetics, Orthotics & Biomechanics |
+| December | bot_12_ai | AI & Machine Learning in PM&R |
 
 <br>
 
