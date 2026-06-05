@@ -3,3 +3,4 @@ pyzotero==1.5.0
 python-dotenv==1.0.0
 schedule==1.2.1
 google-generativeai==0.4.1
+markdown==3.6
