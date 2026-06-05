@@ -20,13 +20,16 @@ class DBManager:
                         added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                     )
                 ''')
-                # 🚀 봇의 완료 여부를 영구 기록할 설정 테이블 추가
-                conn.execute('''
-                    CREATE TABLE IF NOT EXISTS bot_settings (
-                        key TEXT PRIMARY KEY,
-                        val TEXT
-                    )
-                ''')
+                conn.execute('CREATE TABLE IF NOT EXISTS bot_settings (key TEXT PRIMARY KEY, val TEXT)')
+
+                # 기존 DB에 컬럼 안전 추가 (이미 존재하면 에러 없이 넘어감)
+                try: conn.execute("ALTER TABLE papers ADD COLUMN journal TEXT DEFAULT 'Unknown Journal'")
+                except: pass
+                try: conn.execute("ALTER TABLE papers ADD COLUMN authors TEXT DEFAULT 'Unknown Authors'")
+                except: pass
+                try: conn.execute("ALTER TABLE papers ADD COLUMN study_design TEXT DEFAULT 'Original Research'")
+                except: pass
+
         except Exception as e:
             log.error(f"DB 초기화 에러: {e}")
 
@@ -35,25 +38,23 @@ class DBManager:
             with sqlite3.connect(self.db_path) as conn:
                 conn.row_factory = sqlite3.Row
                 cursor = conn.cursor()
-                cursor.execute("SELECT title, year, abstract, doi FROM papers WHERE ref_id=?", (ref_id,))
+                cursor.execute("SELECT * FROM papers WHERE ref_id=?", (ref_id,))
                 row = cursor.fetchone()
                 if row: return dict(row)
                 return None
         except Exception as e:
-            log.error(f"DB 조회 에러 ({ref_id}): {e}")
             return None
 
-    def save_paper(self, ref_id, title, year, abstract, doi):
+    def save_paper(self, ref_id, title, year, abstract, doi, journal="Unknown Journal", authors="Unknown Authors", study_design="Original Research"):
         try:
             with sqlite3.connect(self.db_path) as conn:
                 conn.execute('''
-                    INSERT OR REPLACE INTO papers (ref_id, title, year, abstract, doi)
-                    VALUES (?, ?, ?, ?, ?)
-                ''', (ref_id, title, year, abstract, doi))
+                    INSERT OR REPLACE INTO papers (ref_id, title, year, abstract, doi, journal, authors, study_design)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (ref_id, title, year, abstract, doi, journal, authors, study_design))
         except Exception as e:
-            log.error(f"DB 저장 에러 ({ref_id}): {e}")
+            log.error(f"DB 저장 에러: {e}")
 
-    # 🚀 설정 조회 기능
     def get_setting(self, key):
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -63,13 +64,11 @@ class DBManager:
                 if row: return row[0]
                 return None
         except Exception as e:
-            log.error(f"설정 조회 에러: {e}")
             return None
 
-    # 🚀 설정 저장 기능 (완료 도장 찍기)
     def set_setting(self, key, val):
         try:
             with sqlite3.connect(self.db_path) as conn:
                 conn.execute("INSERT OR REPLACE INTO bot_settings (key, val) VALUES (?, ?)", (key, val))
         except Exception as e:
-            log.error(f"설정 저장 에러: {e}")
+            pass
