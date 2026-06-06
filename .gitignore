@@ -4,12 +4,16 @@
 # Python Cache
 __pycache__/
 *.py[cod]
+*$py.class
 
-# Logs & Databases (NAS에만 보관)
+# Data, Logs & Databases (NAS 보관 및 GitHub 푸시 금지!)
+data/
+logs/
 *.log
 *.db
 
-# Temporary generated files
+# Temporary Outputs & OS Files
 combined_code.txt
+*.md
 .DS_Store
 Thumbs.db

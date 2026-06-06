@@ -2,7 +2,17 @@ import os
 from datetime import datetime
 from dotenv import load_dotenv
 
-load_dotenv()
+# ==============================================================
+# 📂 [완벽 폴더 구조 정리] 데이터와 로그를 전용 폴더로 격리
+# ==============================================================
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+LOGS_DIR = os.path.join(BASE_DIR, "logs")
+
+os.makedirs(DATA_DIR, exist_ok=True)
+os.makedirs(LOGS_DIR, exist_ok=True)
+
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 USER_EMAIL = os.getenv("USER_EMAIL")
 OPENALEX_EMAIL = os.getenv("OPENALEX_EMAIL") or USER_EMAIL
@@ -19,12 +29,13 @@ BOT_KOR_NAME = os.getenv("BOT_KOR_NAME", "일반 재활")
 RUN_MONTH = int(os.getenv("RUN_MONTH", "1"))
 ZOTERO_FOLDER_ID = os.getenv("ZOTERO_FOLDER_ID")
 
-DB_FILE = f"history_{BOT_NAME}.db"
-LOG_FILE = f"app_{BOT_NAME}.log"
+# 🚀 분리된 폴더로 파일 생성 경로 지정
+DB_FILE = os.path.join(DATA_DIR, f"history_{BOT_NAME}.db")
+LOG_FILE = os.path.join(LOGS_DIR, f"app_{BOT_NAME}.log")
 current_year = datetime.now().year
 
 # ==============================================================
-# 🎯 [절대 종결판] 봇별 공식 탐색 대상 저널 DB (100% 투명성 보장)
+# 🎯 봇별 공식 탐색 대상 저널 DB (Target Journal Pool)
 # ==============================================================
 JOURNALS_DB = {
     "general": [
@@ -90,7 +101,6 @@ JOURNALS_DB = {
     ]
 }
 
-# 🚀 12월 AI 봇: 재활의학 전 분과 저널 전체 + "초일류 종합/디지털 메디컬 저널" 11종 융합 (총 50종 완벽 구성)
 TOP_MEDICAL_JOURNALS = [
     {"tier": "🥇 General Top", "name": "The New England Journal of Medicine (NEJM)", "issn": "0028-4793"},
     {"tier": "🥇 General Top", "name": "The Lancet", "issn": "0140-6736"},
@@ -109,7 +119,6 @@ if BOT_NAME == "ai":
     all_rehab_journals = []
     for j_list in JOURNALS_DB.values():
         all_rehab_journals.extend(j_list)
-    # 중복 제거
     unique_rehab = {j['issn']: j for j in all_rehab_journals}.values()
     BOT_JOURNALS = TOP_MEDICAL_JOURNALS + list(unique_rehab)
 
@@ -127,5 +136,4 @@ else:
     ]
     AI_SEARCH_KEYWORDS = ""
 
-# API 스캔을 위한 ISSN 텍스트 통합 (환경변수 무시하고 시스템이 무조건 통제)
 TARGET_ISSNS = "|".join([j["issn"] for j in BOT_JOURNALS])
