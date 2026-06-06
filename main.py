@@ -61,9 +61,6 @@ def run_pipeline():
         current_date = datetime.now().strftime("%Y-%m-%d")
         total_papers = len(ai_analysis_payload)
 
-        # ==============================================================
-        # 🎯 파이썬 시스템 기반 100% 투명한 타겟 저널 테이블 생성
-        # ==============================================================
         md_journal_table = "\n### 🎯 공식 탐색 대상 저널 (Target Journal Pool)\n\n"
         md_journal_table += "| 등급 (Tier) | 저널명 (Journal) | ISSN |\n"
         md_journal_table += "| :---: | :--- | :---: |\n"
@@ -95,13 +92,13 @@ def run_pipeline():
 
         # 📑 [TRACK 1] 옵시디언 전용 Markdown 완벽 조립
         frontmatter = f"""---
-title: "[{config.BOT_KOR_NAME}] AI 연구 기획 브리핑"
+title: "[{config.BOT_KOR_NAME}] AI 1:1 심층 연구 기획 브리핑"
 date: {current_date}
 category: "{config.BOT_KOR_NAME}"
 zotero_folder_name: "{config.BOT_KOR_NAME}"
 zotero_folder_id: "{config.ZOTERO_FOLDER_ID}"
 total_papers_analyzed: {total_papers}
-tags: [rehab_bot, AI_Briefing, {config.BOT_NAME}]
+tags: [rehab_bot, AI_Briefing, {config.BOT_NAME}, Deep_Dive]
 ---
 # 🤖 [{config.BOT_KOR_NAME}] 스마트 연구 기획 브리핑
 
@@ -129,8 +126,7 @@ tags: [rehab_bot, AI_Briefing, {config.BOT_NAME}]
         <div class="dashboard">
             <div class="dash-item"><span class="dash-label">대상 분과</span><span class="dash-value">{config.BOT_KOR_NAME}</span></div>
             <div class="dash-item"><span class="dash-label">Zotero 폴더명</span><span class="dash-value">{config.BOT_KOR_NAME}</span></div>
-            <div class="dash-item"><span class="dash-label">Zotero ID</span><span class="dash-value"><code>{config.ZOTERO_FOLDER_ID}</code></span></div>
-            <div class="dash-item"><span class="dash-label">수집 논문 수</span><span class="dash-value highlight">{total_papers}편</span></div>
+            <div class="dash-item"><span class="dash-label">1:1 심층 분석 완료</span><span class="dash-value highlight">{total_papers}편 전체</span></div>
         </div>
         """
 
@@ -168,21 +164,20 @@ tags: [rehab_bot, AI_Briefing, {config.BOT_NAME}]
             .dash-item {{ display: flex; flex-direction: column; }}
             .dash-label {{ font-size: 12px; color: #64748b; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }}
             .dash-value {{ font-size: 15px; color: #0f172a; font-weight: 600; }}
-            .dash-value code {{ background-color: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #1e293b; }}
             .dash-value.highlight {{ color: #2563eb; font-weight: 800; }}
             .notice {{ background-color: #eff6ff; border-left: 4px solid #3b82f6; padding: 15px 20px; font-size: 14px; color: #1e40af; margin-bottom: 30px; font-weight: 600; line-height: 1.5; }}
 
-            /* AI 본문 렌더링 스타일 */
             .content h1 {{ display: none; }}
             .content h2 {{ font-size: 20px; color: #0f172a; margin-top: 40px; margin-bottom: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-weight: 800; }}
             .content h3 {{ font-size: 18px; color: #1e293b; margin-top: 30px; margin-bottom: 12px; font-weight: 700; }}
             .content p {{ margin-bottom: 18px; font-size: 16px; word-break: keep-all; }}
-            .content li {{ margin-bottom: 10px; font-size: 16px; }}
+            .content ul, .content ol {{ margin-bottom: 25px; padding-left: 24px; }}
+            .content li {{ margin-bottom: 12px; font-size: 16px; }}
 
             /* 🚀 본문 다이렉트 링크 (진짜 논문 제목 클릭 렌더링) */
             .content a {{ color: #2563eb; text-decoration: underline; text-underline-offset: 3px; font-weight: 700; transition: all 0.2s; }}
             .content a:hover {{ background-color: #eff6ff; color: #1d4ed8; }}
-            .content strong, .content b {{ color: #0f172a; font-weight: 700; background-color: #f1f5f9; padding: 2px 5px; border-radius: 4px; }}
+            .content strong, .content b {{ color: #0f172a; font-weight: 700; background-color: #f1f5f9; padding: 2px 5px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }}
 
             /* 하단 카드뷰 스타일 */
             .paper-list-header {{ font-size: 20px; color: #0f172a; margin-top: 50px; margin-bottom: 20px; font-weight: 800; border-bottom: 2px solid #111111; padding-bottom: 10px; }}
@@ -212,12 +207,12 @@ tags: [rehab_bot, AI_Briefing, {config.BOT_NAME}]
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>🤖 [{config.BOT_KOR_NAME}] 스마트 연구 기획 브리핑</h1>
+                    <h1>🤖 [{config.BOT_KOR_NAME}] 1:1 심층 연구 기획 브리핑</h1>
                 </div>
                 <div class="body-wrap">
                     <div class="notice">
                         📥 <b>옵시디언(Obsidian) 전용 백업 파일(.md) 첨부 안내</b><br>
-                        이메일 하단 첨부파일을 옵시디언 <code>Inbox</code>에 넣으시면 메타데이터가 영구 보존됩니다.
+                        이메일 하단 첨부파일을 옵시디언 <code>Inbox</code>에 넣으시면 1:1 인용 가이드가 영구 보존됩니다.
                     </div>
                     {dashboard_html}
 
@@ -229,7 +224,7 @@ tags: [rehab_bot, AI_Briefing, {config.BOT_NAME}]
                     {raw_list_html}
                 </div>
                 <div class="footer">
-                    본 브리핑은 임상 연구자를 위해 AI 파이프라인에 의해 자동 생성되었습니다.<br>
+                    본 브리핑은 임상 연구자를 위해 AI 파이프라인에 의해 분할/조립 자동 생성되었습니다.<br>
                     Generated by <b>Rehab Multi-Bots</b> on {current_date}
                 </div>
             </div>
@@ -237,48 +232,31 @@ tags: [rehab_bot, AI_Briefing, {config.BOT_NAME}]
         </html>
         """
 
-        # ==============================================================
-        # 📱 [TRACK 3] 텔레그램 전용 프리미엄 미니 대시보드 파싱 및 조립
-        # ==============================================================
+        # 📱 [TRACK 3] 텔레그램 전용 프리미엄 미니 대시보드
+        tldr_text = "- 이번 달 심층 브리핑이 성공적으로 생성되었습니다.\n- 이메일에서 상세한 내용을 확인해 주세요."
 
-        # 1. AI 마크다운 리포트에서 "3줄 요약" 부분만 귀신같이 추출 및 Telegram HTML 치환
-        tldr_text = "- 이번 달 브리핑이 성공적으로 생성되었습니다.\n- 이메일에서 상세한 내용을 확인해 주세요."
-
-        # 정규표현식으로 3줄 요약 섹션의 내용만 핀셋 추출!
-        tldr_match = re.search(r'###?\s*💡.*?(?:3줄|요약).*?\n(.*?)(?=\n###? |\Z)', ai_md_report, re.DOTALL | re.IGNORECASE)
+        # 🚀 정규표현식 보완: 수평선(---)이나 다른 특수문자에 걸리지 않도록 안전하게 파싱
+        tldr_match = re.search(r'###?\s*💡.*?(?:3줄|요약).*?\n(.*?)(?=\n###? |\n---|---\n|\Z)', ai_md_report, re.DOTALL | re.IGNORECASE)
         if tldr_match:
             raw_tldr = tldr_match.group(1).strip()
-            # 텔레그램 에러 방지를 위해 특수기호 안전 치환
             safe_tldr = raw_tldr.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
-            # 마크다운 문법을 HTML로 변경 (볼드체, 이탤릭체, 하이퍼링크 등)
             safe_tldr = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', safe_tldr)
             safe_tldr = re.sub(r'\*(.*?)\*', r'<i>\1</i>', safe_tldr)
             safe_tldr = re.sub(r'\[(.*?)\]\((.*?)\)', r'<a href="\2">\1</a>', safe_tldr)
             tldr_text = safe_tldr
-        else:
-            # 안전망 (직접 추출 실패 시 상위 3개 불릿 포인트만 발췌)
-            lines = [line.strip() for line in ai_md_report.split('\n') if line.strip().startswith('-')]
-            if lines:
-                safe_tldr = "\n".join(lines[:3]).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
-                safe_tldr = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', safe_tldr)
-                safe_tldr = re.sub(r'\[(.*?)\]\((.*?)\)', r'<a href="\2">\1</a>', safe_tldr)
-                tldr_text = safe_tldr
 
-        # 2. Top 3 대장 논문 랭킹보드 (다이렉트 링크 장착)
         top_3_html = ""
         for i, p in enumerate(ai_analysis_payload[:3], 1):
             safe_title = p['title'].replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
             safe_journal = p['journal'].replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
             top_3_html += f"<b>{i}위.</b> <a href='{p['doi']}'>{safe_title}</a>\n(<i>{safe_journal}</i> / 📈 {p['count']}회)\n\n"
 
-        # 3. 자동 검색 해시태그 생성 (분과명 공백/괄호/슬래시 제거)
         now_dt = datetime.now()
         kor_name_no_space = config.BOT_KOR_NAME.replace(' ', '_').replace('/', '_').replace('(', '').replace(')', '').replace(',', '')
-        hashtags = f"#RehabBot #{kor_name_no_space} #{now_dt.year}_{now_dt.month:02d}"
+        hashtags = f"#RehabBot #{kor_name_no_space} #DeepDive"
 
-        # 4. 최종 텔레그램 발송 메시지 포맷팅
-        tg_msg = f"""🚨 <b>[{config.BOT_KOR_NAME}] 스마트 브리핑 도착!</b>
-📊 <b>수집 개요:</b> 총 {total_papers}편 (공식 타겟 저널 {len(config.BOT_JOURNALS)}종 탐색)
+        tg_msg = f"""🚨 <b>[{config.BOT_KOR_NAME}] 1:1 심층 브리핑 도착!</b>
+📊 <b>수집 개요:</b> 총 {total_papers}편 전체 딥다이브 해부 완료
 
 💡 <b>이번 달 AI 3줄 요약</b>
 {tldr_text}
@@ -286,11 +264,11 @@ tags: [rehab_bot, AI_Briefing, {config.BOT_NAME}]
 🥇 <b>Top 3 주목받은 대장 논문</b>
 {top_3_html.strip()}
 
-💌 <i>상세한 기획안과 옵시디언(.md) 첨부파일은 이메일을 확인해 주세요!</i>
+💌 <i>수백 편의 1:1 논문 인용 가이드와 구체적 후속 연구 프로토콜은 이메일/옵시디언을 확인해 주세요!</i>
 
 {hashtags}"""
 
-        notify_all(f"🚀 [AI Rehab Bot] {config.BOT_KOR_NAME} 브리핑", tg_msg, final_email_html, md_filename=md_filename, md_content=final_md_content)
+        notify_all(f"🚀 [AI 1:1 심층 브리핑] {config.BOT_KOR_NAME} 도착", tg_msg, final_email_html, md_filename=md_filename, md_content=final_md_content)
         log.info(f"✅ 신규 Zotero 저장 및 리포트 발송 완료 (옵시디언 첨부파일: {md_filename})")
     else:
         log.info("이번 스캔에서 분석할 논문이 없습니다.")
