@@ -1,0 +1,26 @@
+# Environments (보안)
+.env
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data, Logs, Reports & Databases (NAS에만 보관)
+data/
+logs/
+reports/
+*.log
+*.db
+
+# Git & Documentation
+.git/
+.gitignore
+README.md
+CHANGELOG.md
+
+# Temporary generated files
+combined_code.txt
+*.md
+.DS_Store
+Thumbs.db

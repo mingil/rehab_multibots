@@ -1,0 +1,14 @@
+services:
+  # 🤖 단일 마스터 스케줄러 (매달 알아서 분과를 변경하며 가동)
+  bot_master:
+    build: .
+    image: kimmingil/rehab_multibots:latest
+    container_name: multibot_master
+    restart: on-failure:5
+    env_file:
+      - .env
+    volumes:
+      - /volume1/docker/rehab_multibots:/app
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - TZ=Asia/Seoul

@@ -1,0 +1,22 @@
+# Environments (보안)
+.env
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data, Logs, Reports & Databases (NAS 보관 및 GitHub 푸시 금지!)
+data/
+logs/
+reports/
+*.log
+*.db
+
+# Temporary Outputs & OS Files
+combined_code.txt
+*.md
+!README.md
+!CHANGELOG.md
+.DS_Store
+Thumbs.db
