@@ -105,11 +105,15 @@ def analyze_papers(papers_data, log):
         blueprint = json.loads(raw_json)
     except Exception as e:
         log.error(f"JSON 파싱 에러, 안전망으로 전환합니다: {e}")
+        # 실패를 성공처럼 보이게 하지 않도록 대체 문구를 사실대로 표기
         blueprint = {
-            "tldr": ["전체 트렌드 분석을 성공적으로 마쳤습니다.", "하위 상세 분석을 확인하세요.", "수집된 논문 전수 분석입니다."],
+            "tldr": ["⚠️ AI 카테고리 요약 생성에 실패해 기본 분류(통합)로 대체했습니다.", "아래 상세 분석은 논문별로 생성된 부분만 포함됩니다.", "수집된 논문 목록 자체는 정상입니다."],
             "categories": [{"title": "통합 임상 연구", "tags": "#통합리뷰", "intro": "이번 달 전체 주요 연구입니다.", "paper_ids": list(paper_dict.keys())}],
             "protocols": []
         }
+
+    phase1_ok = bool(raw_json)
+    phase2_ok = 0
 
     final_report = "### 💡 이번 달 AI 3줄 요약\n"
     for line in blueprint.get("tldr", []):
@@ -167,7 +171,12 @@ def analyze_papers(papers_data, log):
             [논문 데이터]
             {chunk_text}
             """
-            final_report += call_gemini(prompt_phase2, client, log, use_json=False) + "\n\n"
+            chunk_md = call_gemini(prompt_phase2, client, log, use_json=False)
+            if chunk_md:
+                phase2_ok += 1
+            else:
+                log.error(f"❌ '{cat_title}' 상세 분석 응답 없음 ({len(chunk)}편)")
+            final_report += chunk_md + "\n\n"
             time.sleep(3)
 
         final_report += "---\n\n"
@@ -181,5 +190,10 @@ def analyze_papers(papers_data, log):
             final_report += f"- 🛠️ **분석 방법론:** {proto.get('method', '')}\n"
             final_report += f"- 🎯 **타겟팅할 틈새:** {proto.get('gap', '')}\n\n"
 
-    log.info("✅ 2-Phase [카테고리 + 1:1 딥다이브] 조립 완벽 종료!")
+    if not phase1_ok and phase2_ok == 0:
+        # Gemini가 전부 실패한 경우: 빈 리포트를 '성공'으로 발송하고 그 달을 완료 처리하지 않도록 예외를 던진다.
+        # (job_master_scheduler 가 last_run_month 를 기록하지 않으므로 다음 날 다시 시도됨)
+        raise RuntimeError("Gemini 분석이 전부 실패했습니다 (1단계·2단계 응답 없음) — 리포트 발송을 중단하고 다음 실행에서 재시도합니다.")
+
+    log.info(f"✅ 2-Phase [카테고리 + 1:1 딥다이브] 조립 종료 (1단계 {'성공' if phase1_ok else '실패'}, 2단계 성공 {phase2_ok}건)")
     return final_report.strip()
