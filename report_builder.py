@@ -1,6 +1,22 @@
 import markdown
 import re
 from datetime import datetime
+import jcr_lookup
+
+
+def _tier(j):
+    """대상 저널 등급: JCR 공식 값(JCR_LOOKUP_URL 설정 시)이 있으면 그것, 없으면 config 의 수동 등급."""
+    r = jcr_lookup.lookup(j.get("issn", ""), j.get("name", ""))
+    if r and r.get("jif") is not None:
+        return f"JCR {r.get('best_quartile', '')} · IF {r['jif']}"
+    if r and r.get("source") == "KCI":
+        return r.get("label") or j["tier"]
+    return j["tier"]
+
+
+def _paper_jcr(p):
+    r = jcr_lookup.lookup("", p.get("journal", ""))
+    return f" · {r['label']}" if r and r.get("label") else ""
 
 def build_reports(bot_cfg, ai_md_report, ai_analysis_payload):
     """
@@ -30,11 +46,12 @@ def build_reports(bot_cfg, ai_md_report, ai_analysis_payload):
             <tbody>
     """
     for idx, j in enumerate(bot_cfg["bot_journals"]):
-        md_journal_table += f"| {j['tier']} | **{j['name']}** | `{j['issn']}` |\n"
+        tier = _tier(j)
+        md_journal_table += f"| {tier} | **{j['name']}** | `{j['issn']}` |\n"
         bg_color = "#ffffff" if idx % 2 == 0 else "#f8fafc"
         html_journal_table += f"""
             <tr style="background-color: {bg_color};">
-                <td style="padding: 10px 15px; border-bottom: 1px solid #e2e8f0; text-align: center; font-weight: 600; color: #475569;">{j['tier']}</td>
+                <td style="padding: 10px 15px; border-bottom: 1px solid #e2e8f0; text-align: center; font-weight: 600; color: #475569;">{tier}</td>
                 <td style="padding: 10px 15px; border-bottom: 1px solid #e2e8f0; font-weight: 700; color: #1e40af;">{j['name']}</td>
                 <td style="padding: 10px 15px; border-bottom: 1px solid #e2e8f0; text-align: center; color: #64748b;"><code>{j['issn']}</code></td>
             </tr>
@@ -65,7 +82,7 @@ tags: [rehab_bot, AI_Briefing, {bot_cfg['bot_name']}, Thematic_Review]
     raw_list_md = f"\n\n---\n\n## 📚 원본 논문 체크리스트 (총 {total_papers}편)\n\n"
     for p in ai_analysis_payload:
         raw_list_md += f"- [ ] **[{p.get('rank', 0)}위] [{p['title']}]({p['doi']})** ({p['year']})\n"
-        raw_list_md += f"    - 👨‍🔬 **저자:** {p['authors']} | 📓 **저널:** *{p['journal']}*\n"
+        raw_list_md += f"    - 👨‍🔬 **저자:** {p['authors']} | 📓 **저널:** *{p['journal']}*{_paper_jcr(p)}\n"
         raw_list_md += f"    - 🧬 **연구 설계:** {p['study_design']} | 📈 **피인용:** {p['count']}회\n"
         raw_list_md += f"    - 🔗 **DOI:** `{p['doi']}`\n\n"
 
@@ -93,7 +110,7 @@ tags: [rehab_bot, AI_Briefing, {bot_cfg['bot_name']}, Thematic_Review]
             </div>
             <div class="paper-meta">
                 <span class="badge badge-author">👨‍🔬 {p['authors']}</span>
-                <span class="badge badge-journal">📓 {p['journal']}</span>
+                <span class="badge badge-journal">📓 {p['journal']}{_paper_jcr(p)}</span>
                 <span class="badge badge-design">🧬 {p['study_design']}</span>
                 <span class="badge badge-cite">📈 피인용 {p['count']}회</span>
             </div>
